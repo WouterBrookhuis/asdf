@@ -1,0 +1,207 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 15-dec-2015, 14:30:02
+    Author     : Brookhuis
+*/
+*{
+    margin: 0;
+    padding: 0;
+}
+body{
+    font-family: "Trebuchet MS", Helvetica, sans-serif;
+    background-color: #3c3c3c;
+}
+
+h1, h2, h3, h4, h5, h6{
+    margin-bottom: 0.6em;
+}
+
+p{
+    margin-bottom: 0.6em;
+}
+
+a{
+    color: #9a2828;
+}
+
+/*
+    Pagina opzet
+*/
+#pageHeader, #pageMenu, #pageContent, #pageFooter{
+    width: 100%;
+}
+
+#pageHeader{
+    height: 160px;
+    /*background-color: #9a2828;*/
+    background-color: #476DAD;
+}
+
+#pageMenu, #pageMenuFake{
+    height: 50px;
+    background-color: #D6D6D6;
+    border-top: 4px solid #5a5a5a;
+    border-bottom: 4px solid #5a5a5a;
+}
+
+#pageMenuFake{
+    display: none;
+}
+
+#pageContent{
+}
+
+#pageFooter{
+    border-top: 4px solid #5a5a5a;
+    background-color: #476DAD;
+}
+
+#header, #menu, #content, #footer{
+    max-width: 1000px;
+    width: 100%;
+    margin: 0 auto;
+    box-sizing: border-box;
+}
+
+#header{
+    
+}
+
+#menu{
+    
+}
+
+#content{
+    clear: both;
+    min-height: 800px;
+    background-color: white;
+    padding: 15px;
+}
+
+#footer{
+    color: white;
+    text-align: center;
+    padding: 5px;
+    height: 35px;
+}
+
+
+/*
+    Header
+*/
+#header h1{
+    float: left;
+    padding-top: 20px;
+    padding-left: 5px;
+    color: white;
+    font-size: 45pt;
+    width: 100%;
+    margin-bottom: 0;
+    box-sizing: border-box;
+    font-family: Impact, Charcoal, sans-serif;
+}
+
+#headerUserBox{
+    float: right;
+    box-sizing: border-box;
+    background-color: #3c3c3c;
+    width: 240px;
+    height: 50px;
+    margin: 10px;
+    padding: 5px;
+    color: white;
+    font-size: 10pt;
+}
+
+#headerUserBox h3{
+    font-size: 14pt;
+    margin: 0;
+}
+
+#headerUserBox p{
+    margin: 0;
+}
+
+/*
+    Menu
+*/
+.menuLi{
+    float: left;
+    font-size: 15pt;
+    line-height: 50px;
+    padding: 0 30px;
+    list-style-type: none;
+    box-sizing: border-box;
+}
+
+#menu a{
+    color: white;
+    text-decoration: none;
+}
+
+#menu a:hover{
+    color: #476DAD;
+}
+
+#li_showcase{
+    position: relative;
+}
+
+.showcaseMenuLi{
+    list-style-type: none;
+}
+
+.showcaseMenuUl{
+    background-color: #D6D6D6;
+    position: absolute;
+    padding: 0px 15px;
+    border: 4px solid #5a5a5a;
+    border-top: none;
+    display: none;
+    width: 200px;
+}
+
+#menuSearchDiv{
+    float: right;
+}
+
+#menuSearchBox{
+    margin-top: 10px;
+    height: 30px;
+    font-size: 12pt;
+    box-sizing: border-box;
+}
+
+#menuSearchIcon{
+    margin-left: 5px;
+    margin-right: 10px;
+    margin-top: 10px;
+    height: 24px;
+    float: right;
+}
+
+/*
+    Content
+*/
+#content img{
+    max-width: 100%;
+}
+
+/*
+    Contact
+*/
+.contactTable{
+    text-align: left;
+}
+
+.contactTable td, th{
+    padding: 2px;
+}
+
+/*
+    Over
+*/
