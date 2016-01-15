@@ -42,4 +42,4 @@ define("TABLE_USER", "user");
 define("UPLOAD_DIR", "files");
 define("SITE_HTTP_NAME", "http://ons-portfolio.nl/");
 
-const USER_TYPES = array('user', 'admin');
+const USER_TYPES = ['user', 'admin'];

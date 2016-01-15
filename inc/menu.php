@@ -8,18 +8,25 @@
             {
                 echo '<li class="menuLi"><a href="login.php">Login</a></li>';
             }
-            else
+            else//Logged in
             {
                 echo '<li class="menuLi"><a href="logout.php">Logout</a></li>';
+                ?>
+                <li id="li_showcase" class="menuLi"><a href="lists.php">Lists</a>
+                    <ul class="showcaseMenuUl">
+                        <?php
+                        $favs = lfl_get_user_fav_lists($_SESSION['user']['userId']);
+                        foreach($favs as $entry)
+                        {
+                            echo '<li class="showcaseMenuLi"><a href="viewlist.php?list=' . $entry['listId'] . '">' . $entry['listname'] . '</a></li>';
+                        }
+                        ?>
+                        <li class="showcaseMenuLi"><a href="newlist.php">... new list</a></li>
+                    </ul>
+                </li>
+                <?php
             }
             ?>
-            <!-- TODO: Showcase gaat naar eerste child -->
-            <li id="li_showcase" class="menuLi"><a href="portfolio-systeem.php">Showcase</a>
-                <ul class="showcaseMenuUl">
-                    <li class="showcaseMenuLi"><a href="portfolio-systeem.php">Portfolio Systeem</a></li>
-                    <!--<li class="showcaseMenuLi"><a href="#">Item 3</a></li>-->
-                </ul>
-            </li>
         </ul>
     </div>
 </div>

@@ -139,7 +139,7 @@ a{
 }
 
 #menu a{
-    color: white;
+    color: #5a5a5a;
     text-decoration: none;
 }
 
@@ -205,3 +205,24 @@ a{
 /*
     Over
 */
+.listsTable{
+    margin: 0 auto;
+    width: 80%;
+    text-align: left;
+}
+
+.listsTable th, .listsTable td{
+    padding: 2px;
+}
+
+.col_80{
+    width: 80%;
+}
+
+.col_20{
+    width: 20%;
+}
+
+.icon_small{
+    width: 24px;
+}

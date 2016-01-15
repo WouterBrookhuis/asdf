@@ -1,8 +1,5 @@
 <?php
 require 'lfl.php';
-//DEBYG
-$dummyUser = ['userId' => 1, 'username' => 'Dummy user', 'type' => 'user'];
-$_SESSION['user'] = $dummyUser;
 ?>
 <!DOCTYPE html>
 <!--
@@ -29,6 +26,7 @@ TODO:
         ?>
         <div id="pageContent">
             <div id="content">
+                <script src="jsontest.js"></script>
                 <?php
                     echo '<h1>Rapunzel todo list and ticket system</h1>';
                 ?>

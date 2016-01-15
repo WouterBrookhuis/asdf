@@ -56,6 +56,7 @@ function lfl_get_user_details($userId)
                 //je krijgt geen wachtwoord!
                 $userDetails['password'] = null;
             }
+            mysqli_free_result($result);
         }
     }
     
@@ -85,6 +86,7 @@ function lfl_login($userName, $userPass)
                     $_SESSION['user']['password'] = null;
                 }
             }
+            mysqli_free_result($result);
         }
     }
     return $userId;
@@ -122,6 +124,7 @@ function lfl_register($username, $password, $mail, $type = "user")
         $result = mysqli_query($link, $sql);
         if($result)
         {
+            mysqli_free_result($result);
             return mysqli_insert_id($link);
         }
     }
@@ -166,4 +169,72 @@ function lfl_admin_update_user($userId, $username = null, $mail = null, $type = 
 function lfl_user_is_of_type($haystack = USER_TYPES)
 {
     return (isset($_SESSION['user']) && in_array($_SESSION['user']['type'], $haystack));
+}
+
+function lfl_get_user_lists($userId)
+{
+    $link = lfl_connect();
+    if($link)
+    {
+        $sql = "SELECT list.listId AS listId, list.listname AS listname, list_user.isFav AS isFav 
+            FROM list, list_user 
+            WHERE list_user.userId=" . mysqli_real_escape_string($link, $userId) . " AND list.listId=list_user.listId";
+        $result = mysqli_query($link, $sql);
+        if($result)
+        {
+            $lists = array();
+            while(($row = mysqli_fetch_assoc($result)) != null)
+            {
+                array_push($lists, $row);
+            }
+            mysqli_free_result($result);
+            return $lists;
+        }
+    }
+    return null;
+}
+
+function lfl_get_user_fav_lists($userId)
+{
+    $link = lfl_connect();
+    if($link)
+    {
+        $sql = "SELECT list.listId AS listId, list.listname AS listname, list_user.isFav AS isFav 
+            FROM list, list_user 
+            WHERE list_user.userId=" . mysqli_real_escape_string($link, $userId) . " AND list.listId=list_user.listId AND list_user.isFav=TRUE";
+        $result = mysqli_query($link, $sql);
+        if($result)
+        {
+            $lists = array();
+            while(($row = mysqli_fetch_assoc($result)) != null)
+            {
+                array_push($lists, $row);
+            }
+            mysqli_free_result($result);
+            return $lists;
+        }
+    }
+    return null;
+}
+
+/*
+ * Tokens
+ */
+function lfl_token_update()
+{
+    if(lfl_user_is_of_type())
+    {
+        $_SESSION['user']['token'] = crypt((string)rand(0, PHP_INT_MAX), (string)rand(0, PHP_INT_MAX));
+        return $_SESSION['user']['token'];
+    }
+    return false;
+}
+
+function lfl_token_verify($token)
+{
+    if(lfl_user_is_of_type())
+    {
+        return ($token === $_SESSION['user']['token']);
+    }
+    return false;
 }

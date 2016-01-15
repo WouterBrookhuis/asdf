@@ -13,17 +13,17 @@ if(isset($_POST["submit"]))
     {
         if(lfl_login($un, $pw))
         {
-            $message = "<p>Welkom " . $_SESSION['user']['voornaam'] . " " . $_SESSION['user']['achternaam'] . "</p>\n";
+            $message = "<p>Welcome " . $_SESSION['user']['username'] . "</p>\n";
             $loggedIn = true;
         }
         else
         {
-            $message = "<p>Gebruikersnaam en/of wachtwoord niet correct!</p>\n";
+            $message = "<p>Username and/or password not correct</p>\n";
         }
     }
     else
     {
-        $message = "<p>Vul aub een gebruikersnaam en wachtwoord in</p>";
+        $message = "<p>Please enter a username and password</p>";
     }
 }
 ?>
@@ -59,20 +59,17 @@ TODO:
                 {
                     // put your code here
                     ?>
-                    <p>Testaccounts</p>
-                    <p>Zowel naam als wachtwoord:</p>
-                    <p>docent, student, slb, admin</p>
                     <form action='<?php echo $_SERVER['PHP_SELF'] ?>' method='post' enctype="multipart/form-data">
-                        <p>Gebruikersnaam:<br><input type='text' name='userName'></p>
-                        <p>Wachtwoord:<br><input type='password' name='userPass'></p>
-                        <p><input type='submit' name='submit' value='login'></p>
+                        <p>Username:<br><input type='text' name='userName'></p>
+                        <p>Password:<br><input type='password' name='userPass'></p>
+                        <p><input type='submit' name='submit' value='Login'></p>
                     </form>
+                    <p><a href="register.php">No account? Click here to register</a></p>
                     <?php
                 }
                 else
                 {
-                    echo '<p>U bent al ingelogd als ' . $_SESSION['user']['voornaam'] . " " . $_SESSION['user']['achternaam'] . '</p>';
-                    echo '<p><a href="admin.php">Ga terug</a></p>';
+                    echo '<p>Currently logged in as ' . $_SESSION['user']['username'] . '</p>';
                 }
                 ?>
             </div>
