@@ -29,25 +29,87 @@ TODO:
                 <?php
                     if(lfl_user_is_of_type())
                     {
-                        $userLists = lfl_get_user_lists($_SESSION['user']['userId']);
-                        if(count($userLists) > 0)
+                        echo '<div id="token"><div id="' . lfl_token_update() . '"></div></div>';
+                        ?>
+                <script>
+                    var token = String(document.getElementById('token').children[0].id);
+                    function submitNewList()
+                    {
+                        var newListName = document.getElementById("newListField").value;
+                        if(!newListName.match(/^\s*$/))
                         {
-                            echo '<table class="listsTable">';
-                            echo '<tr><th class="col_80" rel="col">List name</th><th class="col_20" rel="col"></th></tr>';
-                            foreach($userLists as $list)
-                            {
-                                echo '<tr>';
-                                echo '<td class="col_80">' . $list['listname'] . '</td>';
-                                $src = $list['isFav'] ? 'img/icon-star-checked.png' : 'img/icon-star-unchecked.png';
-                                echo '<td class="col_20"><img class="icon_small" id="fav_' . $list['listId'] . '" alt="star" src="' . $src . '"></td>';
-                                echo '</tr>';
-                            }
-                            echo '</table>';
+                            $.post("request.php", { tk: token, tp: "addlist", name: newListName}, function(data){
+                                document.getElementById("newListField").value = '';
+                                document.getElementById("newListMessage").innerHTML = 'New list was created';
+                                fetchLists();
+                            }, "json");
                         }
                         else
                         {
-                            echo '<p>Create your first list</p>';
+                            document.getElementById("newListMessage").innerHTML = 'Please fill in a list name';
                         }
+                    }
+                    function fetchLists()
+                    {
+                        $.post("request.php", { tk: token, tp: "getlists" }, function(data){
+                                console.log(data);
+                                if(data.success)
+                                {
+                                    if(data.data.length > 0)
+                                    {
+                                        var currentTable = document.getElementsByClassName('listsTable');
+                                        if(currentTable.length > 0)
+                                        {
+                                            currentTable[0].remove();
+                                        }
+                                        
+                                        console.log(data.data.length + ' lists found');
+                                        var body = document.body;
+                                        var table = document.createElement('table');
+                                        table.className = "listsTable";
+                                        var tr = table.insertRow();
+                                        var header = document.createElement('th');
+                                        header.className = "col_80";
+                                        tr.appendChild(header);
+                                        header = document.createElement('th');
+                                        header.className = "col_20";
+                                        tr.appendChild(header);
+                                        
+                                        for(var i = 0; i < data.data.length; i++)
+                                        {
+                                            tr = table.insertRow();
+                                            td = tr.insertCell();
+                                            td.className = "col_80";
+                                            td.appendChild(document.createTextNode(data.data[i].listname));
+                                            td = tr.insertCell();
+                                            td.className = "col_20";
+                                            var img = document.createElement('img');
+                                            img.alt = 'fav icon';
+                                            img.src = (data.data[i].isFav > 0) ? 'img/icon-star-checked.png' : 'img/icon-star-unchecked.png';;
+                                            td.appendChild(img);
+                                        }
+                                        
+                                        document.getElementById('content').appendChild(table);
+                                    }
+                                    else
+                                    {
+                                        console.log('No lists');
+                                    }
+                                }
+                            }, "json");
+                    }
+                    $(document).ready(function(){
+                        fetchLists();
+                    });
+                    
+                </script>
+                <div>
+                    <p>Create new list</p>
+                    <input id="newListField" type="text" name="listname">
+                    <button onclick="submitNewList()">Add new list</button>
+                    <p id="newListMessage"></p>
+                </div>
+                <?php
                     }
                     else
                     {

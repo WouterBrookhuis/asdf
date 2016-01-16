@@ -21,23 +21,9 @@ if(DB_DATABASE_MODE === DB_MODE_LOCAL)
     define("MYSQL_USER", "portfolio");
     define("MYSQL_PASS", "systeem");
 }
-else if(DB_DATABASE_MODE === DB_MODE_SERVER_REMOTE)
-{
-    define("DATABASE_NAME", "db219753_portfolio_systeem");
-    define("MYSQL_HOST" , "mysql765.cp.hostnet.nl");
-    define("MYSQL_PORT", 3306);
-    define("MYSQL_USER", "u219753_pfs");
-    define("MYSQL_PASS", "{ix38ZA(XF8tRK|o");
-}
-else        //PORTFOLIO_MODE_SERVER
-{
-    define("DATABASE_NAME", "db219753_portfolio_systeem");
-    define("MYSQL_HOST", "mysql765int.cp.hostnet.nl");
-    define("MYSQL_PORT", 3306);
-    define("MYSQL_USER", "u219753_pfs");
-    define("MYSQL_PASS", "{ix38ZA(XF8tRK|o");
-}
+
 define("TABLE_USER", "user");
+
 
 define("UPLOAD_DIR", "files");
 define("SITE_HTTP_NAME", "http://ons-portfolio.nl/");

@@ -21,19 +21,45 @@ session_start();
 
 function lfl_connect()
 {
-    $dbConnect = @mysqli_connect(MYSQL_HOST, MYSQL_USER, MYSQL_PASS, DATABASE_NAME, MYSQL_PORT);
-    if($dbConnect !== false)
+    $link = @mysqli_connect(MYSQL_HOST, MYSQL_USER, MYSQL_PASS);
+    if($link !== false)
     {
-        $db = @mysqli_select_db($dbConnect, DATABASE_NAME);
-        if($db === false)
+        $db = @mysqli_select_db($link, DATABASE_NAME);
+        if(!$db)
         {
-            /*echo "<p>Unable to connect to the database server.</p>";
-            echo "<p>" . mysqli_error($dbConnect) . "</p>";*/
-            mysqli_close($dbConnect);
-            $dbConnect = false;
+            mysqli_close($link);
+            $link = false;
         }
     }
-    return $dbConnect;
+    return $link;
+}
+
+function execute_sql_file($host, $user, $pass, $sqlfile)
+{
+    echo '<p>Executing sql file ' . $sqlfile . '</p>';
+    if(file_exists($sqlfile))
+    {
+        $raw = readfile($sqlfile);
+        $commands = explode(';', $raw);
+        $link = @mysqli_connect($host, $user, $pass);
+        if($link)
+        {
+            foreach($commands as $sql)
+            {
+                $result = mysqli_query($link, $sql);
+                echo $result ? '<p>Executed query ' . $sql . ' with success.</p>' : '<p>ERROR: could not execute query ' . $sql . '</p>';
+            }
+            echo '<p>Finished executing sql file. Please check for errors above.</p>';
+        }
+        else
+        {
+            echo '<p>ERROR: could not connect to database!</p>';
+        }
+    }
+    else
+    {
+        echo '<p>ERROR: file does not exist!</p>';
+    }
 }
 
 /*
@@ -124,7 +150,6 @@ function lfl_register($username, $password, $mail, $type = "user")
         $result = mysqli_query($link, $sql);
         if($result)
         {
-            mysqli_free_result($result);
             return mysqli_insert_id($link);
         }
     }
@@ -237,4 +262,23 @@ function lfl_token_verify($token)
         return ($token === $_SESSION['user']['token']);
     }
     return false;
+}
+
+function lfl_add_list($ownerId, $listname)
+{
+    $link = lfl_connect();
+    if($link)
+    {
+        $sql = "INSERT INTO list VALUES(NULL, '" . mysqli_real_escape_string($link, $listname) . "')";
+        if(mysqli_query($link, $sql))
+        {
+            $id = mysqli_insert_id($link);
+            $sql = "INSERT INTO list_user VALUES(" . $id . ", " . mysqli_real_escape_string($link, $ownerId) . ", 0)";
+            if(mysqli_query($link, $sql))
+            {
+                return $id;
+            }
+        }
+    }
+    return null;
 }

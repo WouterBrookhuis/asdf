@@ -26,10 +26,13 @@ TODO:
         ?>
         <div id="pageContent">
             <div id="content">
-                <script src="jsontest.js"></script>
+                
                 <?php
                     echo '<h1>Rapunzel todo list and ticket system</h1>';
+                    echo '<div id="token"><div id="' . lfl_token_update() . '"></div></div>';
+                    echo '<p>Token: ' . $_SESSION['user']['token'] . '</p>';
                 ?>
+                <script src="jsontest.js"></script>
             </div>
         </div>
         <?php
