@@ -10,7 +10,7 @@ TODO:
 -->
 <html>
     <head>
-        <title>Rapunzel</title>
+        <title>Lists - POST it</title>
         <meta charset="UTF-8">
         <!-- Mobile phone 'support' -->
         <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -80,7 +80,10 @@ TODO:
                                             tr = table.insertRow();
                                             td = tr.insertCell();
                                             td.className = "col_80";
-                                            td.appendChild(document.createTextNode(data.data[i].listname));
+                                            var a = document.createElement('a');
+                                            a.href = "viewlist.php?listId=" + data.data[i].listId;
+                                            a.appendChild(document.createTextNode(data.data[i].listname));
+                                            td.appendChild(a);
                                             td = tr.insertCell();
                                             td.className = "col_20";
                                             var img = document.createElement('img');

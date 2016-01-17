@@ -39,6 +39,19 @@ if(lfl_user_is_of_type())
                 }
                 break;
             }
+            case "togglefav":
+            {
+                $listId = filter_input(INPUT_POST, 'listId', FILTER_VALIDATE_INT);
+                if($listId)
+                {
+                    if(lfl_toggle_list_fav($listId)){
+                        $result = array('success' => true);
+                    }else{
+                        $result = array('success' => false);
+                    }
+                }
+                break;
+            }
             default:
             {
                 $result = 'error';

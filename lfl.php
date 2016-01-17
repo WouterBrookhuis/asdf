@@ -196,6 +196,93 @@ function lfl_user_is_of_type($haystack = USER_TYPES)
     return (isset($_SESSION['user']) && in_array($_SESSION['user']['type'], $haystack));
 }
 
+function lfl_user_owns_list($userId, $listId)
+{
+    $link = lfl_connect();
+    if($link)
+    {
+        $sql = "SELECT * 
+            FROM list_user 
+            WHERE list_user.listId=" . mysqli_real_escape_string($link, $listId)
+            . " AND list_user.userId=" . mysqli_real_escape_string($link, $userId);
+        $result = mysqli_query($link, $sql);
+        if($result)
+        {
+            if(($row = mysqli_fetch_assoc($result)) != null)
+            {
+                return true;
+            }
+            mysqli_free_result($result);
+        }
+    }
+    return null;
+}
+
+function lfl_get_list_users($listId)
+{
+    $link = lfl_connect();
+    if($link)
+    {
+        $sql = "SELECT * 
+            FROM list_user 
+            WHERE list_user.listId=" . mysqli_real_escape_string($link, $listId);
+        $result = mysqli_query($link, $sql);
+        if($result)
+        {
+            $lists = array();
+            while(($row = mysqli_fetch_assoc($result)) != null)
+            {
+                array_push($lists, $row);
+            }
+            mysqli_free_result($result);
+            return $lists;
+        }
+    }
+    return null;
+}
+
+function lfl_get_list($listId)
+{
+    $link = lfl_connect();
+    if($link)
+    {
+        $sql = "SELECT * 
+            FROM list 
+            WHERE list.listId=" . mysqli_real_escape_string($link, $listId);
+        $result = mysqli_query($link, $sql);
+        if($result)
+        {
+            if(($row = mysqli_fetch_assoc($result)) != null)
+            {
+                return $row;
+            }
+            mysqli_free_result($result);
+        }
+    }
+    return null;
+}
+
+function lfl_get_list_items($listId)
+{
+    $link = lfl_connect();
+    if($link)
+    {
+        $sql = "SELECT * FROM item WHERE listId=" . mysqli_real_escape_string($link, $listId);
+        $result = mysqli_query($link, $sql);
+        if($result)
+        {
+            $lists = array();
+            while(($row = mysqli_fetch_assoc($result)) != null)
+            {
+                array_push($lists, $row);
+            }
+            mysqli_free_result($result);
+            return $lists;
+        }
+    }
+    return null;
+}
+
 function lfl_get_user_lists($userId)
 {
     $link = lfl_connect();
@@ -278,6 +365,22 @@ function lfl_add_list($ownerId, $listname)
             {
                 return $id;
             }
+        }
+    }
+    return null;
+}
+
+function lfl_toggle_list_fav($listId)
+{
+    $link = lfl_connect();
+    if($link)
+    {
+        $lst = lfl_get_list($listId);
+        if($lst)
+        {
+            $f = ($f > 0) ? 0 : 1;
+            $sql = "UPDATE list SET isFav=" . $f . " WHERE listId=" . $listId;
+            return mysqli_query($link, $sql);
         }
     }
     return null;

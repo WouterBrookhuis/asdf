@@ -226,3 +226,24 @@ a{
 .icon_small{
     width: 24px;
 }
+
+/*
+*/
+.listItemBox{
+    width: 100%;
+    min-height: 150px;
+    background-color: #476DAD;
+    color: white;
+    margin-bottom: 10px;
+}
+.listItemBox h3, .listItemBox p{
+    margin: 0;
+}
+.listItemBoxHeader{
+    background-color: #D6D6D6;
+    color: #5a5a5a;
+    padding: 5px;
+}
+.listItemBoxContent{
+    padding: 5px;
+}
